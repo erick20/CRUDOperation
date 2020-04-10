@@ -190,7 +190,7 @@ namespace Crud.DAL.Repository
                             _result.Id = Convert.ToInt32(reader["Id"]);
                             _result.FirstName = reader["FirstName"].ToString();
                             _result.LastName = reader["LastName"].ToString();
-                            _result.Email = reader["LastName"].ToString();
+                            _result.Email = reader["Email"].ToString();
                             _result.Phone = reader["Phone"].ToString();
                             _result.CreatedDate = Convert.ToDateTime(reader["CreatedDate"]);
                             _result.Role.Id = Convert.ToInt32(reader["RoleId"]);
@@ -231,7 +231,7 @@ namespace Crud.DAL.Repository
                             _result.Id = Convert.ToInt32(reader["Id"]);
                             _result.FirstName = reader["FirstName"].ToString();
                             _result.LastName = reader["LastName"].ToString();
-                            _result.Email = reader["LastName"].ToString();
+                            _result.Email = reader["Email"].ToString();
                             _result.Phone = reader["Phone"].ToString();
                             _result.CreatedDate = Convert.ToDateTime(reader["CreatedDate"]);
                             _result.Role.Id = Convert.ToInt32(reader["RoleId"]);                            
