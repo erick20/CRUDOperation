@@ -56,7 +56,7 @@ namespace Crud.Api.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(List<UserResponseModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUsers(int id)
         {
             Users _user = await _userRepository.GetUser(id);
@@ -67,9 +67,9 @@ namespace Crud.Api.Controllers
                 {
                     Code = "Id",
                     Key = "Id",
-                    Message = "Id Is Invalid"
+                    Message = "Id Not Found"
                 });
-                ProblemReporter.ReportBadRequest(JsonConvert.SerializeObject(_validationMessages));
+                ProblemReporter.ReportResourseNotfound(JsonConvert.SerializeObject(_validationMessages));
             }
 
             UserResponseModel _result = new UserResponseModel
@@ -121,7 +121,8 @@ namespace Crud.Api.Controllers
 
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(List<UserResponseModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status400BadRequest)]// *************************
+        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutUsers(int id, [FromBody] UserPutModel model)
         {
             if (model.RoleId.HasValue)
@@ -148,9 +149,9 @@ namespace Crud.Api.Controllers
                 {
                     Code = "Id",
                     Key = "Id",
-                    Message = "Id Is Invalid"
+                    Message = "Not Found"
                 });
-                ProblemReporter.ReportBadRequest(JsonConvert.SerializeObject(_validationMessages));
+                ProblemReporter.ReportResourseNotfound(JsonConvert.SerializeObject(_validationMessages));
             }
 
             _user = _mapper.Map(model, _user);
@@ -172,10 +173,9 @@ namespace Crud.Api.Controllers
         }
 
 
-
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(List<UserResponseModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status400BadRequest)]// *************************
+        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status404NotFound)]// *************************
         public async Task<IActionResult> DeleteUsers(int id)
         {
             Users _user = await _userRepository.GetUser(id);
@@ -192,7 +192,7 @@ namespace Crud.Api.Controllers
 
         [HttpGet("FilterByRole")]
         [ProducesResponseType(typeof(List<UserResponseModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(List<ValidationMessageModel>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetFilteredUsers(int RoleId)
         {            
             Roles _role = await _roleRepository.getRole(RoleId);
@@ -203,9 +203,9 @@ namespace Crud.Api.Controllers
                 {
                     Code = "RoleId",
                     Key = "RoleId",
-                    Message = "RoleId Is Invalid"
+                    Message = "RoleId Not Found"
                 });
-                ProblemReporter.ReportBadRequest(JsonConvert.SerializeObject(_validationMessages));
+                ProblemReporter.ReportResourseNotfound(JsonConvert.SerializeObject(_validationMessages));
             }
 
             List<UserResponseModel> _resultList = new List<UserResponseModel>();
